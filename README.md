@@ -38,7 +38,7 @@ A model just represents a table in your database and the attributes of the model
 from django.db import models
 
 class Songs(models.Model):
-    id = models.AutoField(primary_key=True)
+    # no need to declare a primary key field it is auto added with the name of 'id' by Django
     artist_name = models.CharField(max_length=255, default='')
     song_title = models.CharField(max_length=255, default='')
     song_year = models.IntegerField(blank=True, null=True)
