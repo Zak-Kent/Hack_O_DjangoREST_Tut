@@ -19,8 +19,8 @@ class ExampleView(generics.ListAPIView):
     serializer_class = serializers.ExampleSerializer
 
     def get_queryset(self):
-        song_year = self.kwargs['song_year']
-        return models.Songs.objects.filter(song_year__exact=song_year)
+        year_from_url = self.kwargs['song_year']
+        return models.Songs.objects.filter(song_year__exact=year_from_url)
 ```
 In the view above we're overriding the built in ```get_queryset``` method of the ```generics.ListAPIView``` class. Doing this allows us to access the ```song_year``` keyword argument and then return a subset of objects from our ```Songs``` tables filered on that value. Notice how we're accessing ```self.kwargs``` and asking for the  value from the 'song_year' key.  
 
@@ -56,10 +56,10 @@ class ExampleView(generics.ListAPIView):
 
         """
         queryset = models.Songs.objects.all()
-        year = self.request.query_params.get('year', None)
+        year_from_url = self.request.query_params.get('year', None)
 
         if song_year is not None:
-            queryset = queryset.filter(song_year__exact=year)
+            queryset = queryset.filter(song_year__exact=year_from_url)
         return queryset
 ```
 The example view above looks for the ```year``` variable in the request's ```query_params``` attribute. If it is present it assigns its value to the ```song_year``` variable inside the view. If no ```year``` is found in the ```query_params``` the ```song_year``` variable is then set to the value of ```None```. This is then used to decide whether or not to filter the returned values looking for the ```year``` specified in the querystring.
