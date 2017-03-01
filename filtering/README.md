@@ -58,7 +58,7 @@ class ExampleView(generics.ListAPIView):
         queryset = models.Songs.objects.all()
         year_from_url = self.request.query_params.get('year', None)
 
-        if song_year is not None:
+        if year_from_url is not None:
             queryset = queryset.filter(song_year__exact=year_from_url)
         return queryset
 ```
